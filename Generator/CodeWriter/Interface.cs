@@ -81,6 +81,7 @@ namespace Generator
 
 		private void WriteFunction( SteamApiDefinition.Interface iface, SteamApiDefinition.Interface.Method func )
 		{
+			if (func.FlatName == "SteamAPI_ISteamUGC_GetSupportedGameVersionData") return;
 			var returnType = BaseType.Parse( func.ReturnType, null, func.CallResult );
 			returnType.Func = func.Name;
 

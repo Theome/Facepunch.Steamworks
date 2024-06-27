@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,9 @@ namespace Steamworks
 	{
 		internal static class Native
 		{
-			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_Init", CallingConvention = CallingConvention.Cdecl )]
+			[DllImport( Platform.LibraryName, EntryPoint = "SteamInternal_SteamAPI_Init", CallingConvention = CallingConvention.Cdecl )]
 			[return: MarshalAs( UnmanagedType.I1 )]
-			public static extern bool SteamAPI_Init();
+			public static extern SteamAPIInitResult SteamAPI_Init(IntPtr pszInternalCheckInterfaceVersions, IntPtr pOutErrMsg);
 
 			[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_Shutdown", CallingConvention = CallingConvention.Cdecl )]
 			public static extern void SteamAPI_Shutdown();
@@ -26,9 +27,34 @@ namespace Steamworks
 			public static extern bool SteamAPI_RestartAppIfNecessary( uint unOwnAppID );
 			
 		}
-		static internal bool Init()
+		static internal bool Init(out string errMsg)
 		{
-			return Native.SteamAPI_Init();
+			IntPtr SteamErrorMsgPtr = Marshal.AllocHGlobal(Defines.k_cchMaxSteamErrMsg);
+			var ret = Native.SteamAPI_Init(IntPtr.Zero, SteamErrorMsgPtr);
+			errMsg = PtrToStringUTF8(SteamErrorMsgPtr);
+			Marshal.FreeHGlobal(SteamErrorMsgPtr);
+			
+			return ret == SteamAPIInitResult.OK;
+			
+			static string PtrToStringUTF8(IntPtr nativeUtf8) {
+				if (nativeUtf8 == IntPtr.Zero) {
+					return null;
+				}
+
+				int len = 0;
+
+				while (Marshal.ReadByte(nativeUtf8, len) != 0) {
+					++len;
+				}
+
+				if (len == 0) {
+					return string.Empty;
+				}
+
+				byte[] buffer = new byte[len];
+				Marshal.Copy(nativeUtf8, buffer, 0, buffer.Length);
+				return Encoding.UTF8.GetString(buffer);
+			}
 		}
 		
 		static internal void Shutdown()
