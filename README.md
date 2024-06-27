@@ -4,7 +4,7 @@ Facepunch.Steamworks is probably the best steam wrapper to work with in C# - unf
 ## So whats in this fork?
 ✔ Built against [Steamworks 1.60](https://partner.steamgames.com/downloads/list)
 ✔ Exposes all the new [Steam Timeline](https://partner.steamgames.com/doc/features/timeline) stuff needed to have full [Game Recording](https://store.steampowered.com/gamerecording) support in a game
-✔ Adds a Unity package that can be easily installed with Unity Package Manager, with prebuild 64bit .Net Standard 2.1 assembalies for Windows, OSX and Steamdeck
+✔ Adds a Unity package that can be easily installed with Unity Package Manager, with prebuilt 64bit .Net Standard 2.1 assemblies for Windows, OSX and Steamdeck
 
 
 
