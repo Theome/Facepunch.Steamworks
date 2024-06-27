@@ -23,9 +23,9 @@ namespace Steamworks
 			System.Environment.SetEnvironmentVariable( "SteamAppId", appid.ToString() );
 			System.Environment.SetEnvironmentVariable( "SteamGameId", appid.ToString() );
 
-			if ( !SteamAPI.Init() )
+			if ( !SteamAPI.Init(out string err) )
 			{
-				throw new System.Exception( "SteamApi_Init returned false. Steam isn't running, couldn't find Steam, App ID is ureleased, Don't own App ID." );
+				throw new System.Exception( $"SteamApi_Init returned false. Steam isn't running, couldn't find Steam, App ID is ureleased, Don't own App ID. {err}" );
 			}
 
 			AppId = appid;
@@ -59,6 +59,7 @@ namespace Steamworks
 			AddInterface<SteamUtils>();
 			AddInterface<SteamVideo>();
 			AddInterface<SteamRemotePlay>();
+			AddInterface<SteamTimeline>();
 
 			initialized = openInterfaces.Count > 0;
 
