@@ -2790,7 +2790,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamNetworkingMessagesSessionRequest_t : ICallbackData
 	{
-		internal NetIdentity DentityRemote; // m_identityRemote SteamNetworkingIdentity
+		internal NetIdentity IdentityRemote; // m_identityRemote SteamNetworkingIdentity
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamNetworkingMessagesSessionRequest_t) );
@@ -2802,7 +2802,7 @@ namespace Steamworks.Data
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct SteamNetworkingMessagesSessionFailed_t : ICallbackData
 	{
-		internal ConnectionInfo Nfo; // m_info SteamNetConnectionInfo_t
+		internal ConnectionInfo Info; // m_info SteamNetConnectionInfo_t
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamNetworkingMessagesSessionFailed_t) );
