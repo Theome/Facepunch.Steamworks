@@ -68,6 +68,10 @@ namespace Steamworks.Data
 			}
 		}
 
+    public readonly Friend Member(int index) {
+      return new Friend( SteamMatchmaking.Internal.GetLobbyMemberByIndex(Id, index) );
+    }
+
 
 		/// <summary>
 		/// Get data associated with this lobby.
