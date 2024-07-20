@@ -114,7 +114,7 @@ namespace Steamworks
 
 		public struct FriendGameInfo
 		{
-			internal ulong GameID; // m_gameID class CGameID
+			public ulong GameID; // m_gameID class CGameID
 			internal uint GameIP; // m_unGameIP uint32
 			internal ulong SteamIDLobby; // m_steamIDLobby class CSteamID
 
