@@ -35,7 +35,7 @@ namespace Steamworks {
             for (int i = 0; i < numberOfMessages; i++) {
                 IntPtr messagePtr = Marshal.ReadIntPtr(ppOutMessages, i * IntPtr.Size);
                 NetMsg message = Marshal.PtrToStructure<NetMsg>(messagePtr);
-                OnReceiveMessage.Invoke(message.Connection, message.Identity, message.DataPtr, message.DataSize, message.RecvTime, message.MessageNumber, message.Channel);
+                OnReceiveMessage?.Invoke(message.Connection, message.Identity, message.DataPtr, message.DataSize, message.RecvTime, message.MessageNumber, message.Channel);
                 NetMsg.InternalRelease((NetMsg*)messagePtr);
 
             }
