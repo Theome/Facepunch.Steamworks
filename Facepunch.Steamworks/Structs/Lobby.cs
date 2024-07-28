@@ -222,6 +222,11 @@ namespace Steamworks.Data
 			return SteamMatchmaking.Internal.SetLobbyType( Id, LobbyType.FriendsOnly );
 		}
 
+		public bool SetLobbyType(LobbyType type)
+		{
+			return SteamMatchmaking.Internal.SetLobbyType( Id, type );
+		}
+
 		/// <summary>
 		/// Set whether or not the lobby can be joined.
 		/// </summary>
