@@ -31,7 +31,17 @@ namespace Steamworks
 		public static event Action<ConnectionInfo> OnSteamNetworkingMessagesSessionFailed;
 		public static event Action<Connection, NetIdentity, IntPtr, int, long, long, int> OnReceiveMessage;
 
-		public static Result SendMessageToUser( NetIdentity identityRemote, IntPtr pubData, uint cubData, SendType nSendFlags, int nRemoteChannel ) => Internal.SendMessageToUser( ref identityRemote, pubData, cubData, (int)nSendFlags, nRemoteChannel );
+		public static Result SendMessageToUser( NetIdentity identityRemote, Span<byte> data, SendType nSendFlags, int nRemoteChannel )
+		{
+			unsafe
+			{
+				fixed ( byte* ptr = data )
+				{
+					IntPtr dataPtr = (IntPtr)ptr;
+					return Internal.SendMessageToUser( ref identityRemote, dataPtr, (uint)data.Length, (int)nSendFlags, nRemoteChannel );
+				}
+			}
+		}
 		public unsafe static int ReceiveMessagesOnChannel( int nLocalChannel, IntPtr ppOutMessages, int nMaxMessages ) => UnsafeReceiveMessagesOnChannel( nLocalChannel, ppOutMessages, nMaxMessages );
 
 		internal unsafe static int UnsafeReceiveMessagesOnChannel( int nLocalChannel, IntPtr ppOutMessages, int nMaxMessages )
