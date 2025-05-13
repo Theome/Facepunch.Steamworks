@@ -29,9 +29,8 @@ namespace Steamworks
 
 		public static event Action<NetIdentity> OnSteamNetworkingMessagesSessionRequest;
 		public static event Action<ConnectionInfo> OnSteamNetworkingMessagesSessionFailed;
-		public static event Action<Connection, NetIdentity, IntPtr, int, long, long, int> OnReceiveMessage;
 
-		public static Result SendMessageToUser( NetIdentity identityRemote, Span<byte> data, SendType nSendFlags, int nRemoteChannel )
+		public static Result SendMessageToUser( NetIdentity identityRemote, ReadOnlySpan<byte> data, SendType nSendFlags, int nRemoteChannel )
 		{
 			unsafe
 			{
@@ -42,26 +41,75 @@ namespace Steamworks
 				}
 			}
 		}
-		public unsafe static int ReceiveMessagesOnChannel( int nLocalChannel, IntPtr ppOutMessages, int nMaxMessages ) => UnsafeReceiveMessagesOnChannel( nLocalChannel, ppOutMessages, nMaxMessages );
-
-		internal unsafe static int UnsafeReceiveMessagesOnChannel( int nLocalChannel, IntPtr ppOutMessages, int nMaxMessages )
-		{
-			int numberOfMessages = Internal.ReceiveMessagesOnChannel( nLocalChannel, ppOutMessages, nMaxMessages );
-			for ( int i = 0; i < numberOfMessages; i++ )
-			{
-				IntPtr messagePtr = Marshal.ReadIntPtr( ppOutMessages, i * IntPtr.Size );
-				NetMsg message = Marshal.PtrToStructure<NetMsg>( messagePtr );
-				OnReceiveMessage?.Invoke( message.Connection, message.Identity, message.DataPtr, message.DataSize, message.RecvTime, message.MessageNumber, message.Channel );
-				NetMsg.InternalRelease( (NetMsg*)messagePtr );
-
-			}
-			return numberOfMessages;
-		}
 
 		public static bool AcceptSessionWithUser( NetIdentity identityRemote ) => Internal.AcceptSessionWithUser( ref identityRemote );
 		public static bool CloseSessionWithUser( NetIdentity identityRemote ) => Internal.CloseSessionWithUser( ref identityRemote );
 		public static bool CloseChannelWithUser( NetIdentity identityRemote, int nLocalChannel ) => Internal.CloseChannelWithUser( ref identityRemote, nLocalChannel );
 		public static ConnectionState GetSessionConnectionInfo( NetIdentity identityRemote, ref ConnectionInfo pConnectionInfo, ref ConnectionStatus pQuickStatus ) => Internal.GetSessionConnectionInfo( ref identityRemote, ref pConnectionInfo, ref pQuickStatus );
+	}
 
+	public class MessageManager : IDisposable
+	{
+		private readonly IntPtr[] messageBuffer;
+		private GCHandle messageBufferHandle;
+		private readonly Message[] messageCache;
+		private bool disposed = false;
+
+		public MessageManager( int maxMessages )
+		{
+			messageBuffer = new IntPtr[maxMessages];
+			messageBufferHandle = GCHandle.Alloc( messageBuffer, GCHandleType.Pinned );
+			messageCache = new Message[maxMessages];
+		}
+
+		public ReadOnlySpan<Message> ReceiveMessagesOnChannel( int channel )
+		{
+			if ( disposed ) throw new ObjectDisposedException( nameof( MessageManager ) );
+			IntPtr bufferAddress = messageBufferHandle.AddrOfPinnedObject();
+			int numberOfMessages = SteamNetworkingMessages.Internal.ReceiveMessagesOnChannel( channel, bufferAddress, messageBuffer.Length );
+			for ( int i = 0; i < numberOfMessages; i++ )
+			{
+				IntPtr messagePtr = Marshal.ReadIntPtr( bufferAddress, i * IntPtr.Size );
+				messageCache[i] = new Message( messagePtr );
+			}
+			return new ReadOnlySpan<Message>( messageCache, 0, numberOfMessages );
+		}
+
+		public void Dispose()
+		{
+			if ( !disposed )
+			{
+				messageBufferHandle.Free();
+				disposed = true;
+			}
+		}
+	}
+
+	public readonly struct Message : IDisposable
+	{
+		public Connection Connection => NetMsg.Connection;
+		public NetIdentity Identity => NetMsg.Identity;
+		public long ReceiveTime => NetMsg.RecvTime;
+		public long MessageNumber => NetMsg.MessageNumber;
+		public int Channel => NetMsg.Channel;
+
+		private readonly IntPtr MessagePtr;
+		private readonly NetMsg NetMsg;
+
+		internal Message( IntPtr messagePtr )
+		{
+			MessagePtr = messagePtr;
+			NetMsg = Marshal.PtrToStructure<NetMsg>( messagePtr );
+		}
+
+		public unsafe Span<byte> GetData()
+		{
+			return new Span<byte>( NetMsg.DataPtr.ToPointer(), NetMsg.DataSize );
+		}
+
+		public unsafe void Dispose()
+		{
+			NetMsg.InternalRelease( (NetMsg*)MessagePtr );
+		}
 	}
 }
