@@ -98,3 +98,8 @@ csharp_space_between_square_brackets = false
 # Wrapping preferences
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
+
+dotnet_analyzer_diagnostic.severity = none
+
+dotnet_diagnostic.CS8019.severity = none 
+
