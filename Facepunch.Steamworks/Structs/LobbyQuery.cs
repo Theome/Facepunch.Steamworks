@@ -197,7 +197,7 @@ namespace Steamworks.Data
 				}
 			}
 
-			if( numericalFilters != null )
+			if ( numericalFilters != null )
 			{
 				foreach ( var n in numericalFilters )
 				{
@@ -205,9 +205,9 @@ namespace Steamworks.Data
 				}
 			}
 
-			if( nearValFilters != null )
+			if ( nearValFilters != null )
 			{
-				foreach (var v in nearValFilters )
+				foreach ( var v in nearValFilters )
 				{
 					SteamMatchmaking.Internal.AddRequestLobbyListNearValueFilter( v.Key, v.Value );
 				}
@@ -224,7 +224,7 @@ namespace Steamworks.Data
 			LobbyMatchList_t? list = await SteamMatchmaking.Internal.RequestLobbyList();
 			if ( !list.HasValue || list.Value.LobbiesMatching == 0 )
 			{
-				return null;
+				return new Lobby[0];
 			}
 
 			Lobby[] lobbies = new Lobby[list.Value.LobbiesMatching];
@@ -238,3 +238,4 @@ namespace Steamworks.Data
 		}
 	}
 }
+
