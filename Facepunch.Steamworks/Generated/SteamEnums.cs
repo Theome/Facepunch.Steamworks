@@ -162,6 +162,7 @@ namespace Steamworks
 		K_EResultPhoneNumberIsVOIP = 127,
 		NotSupported = 128,
 		FamilySizeLimitExceeded = 129,
+		OfflineAppCacheInvalid = 130,
 	}
 	
 	//
@@ -532,21 +533,6 @@ namespace Steamworks
 	}
 	
 	//
-	// EUserRestriction
-	//
-	internal enum UserRestriction : int
-	{
-		None = 0,
-		Unknown = 1,
-		AnyChat = 2,
-		VoiceChat = 4,
-		GroupChat = 8,
-		Rating = 16,
-		GameInvites = 32,
-		Trading = 64,
-	}
-	
-	//
 	// EOverlayToStoreFlag
 	//
 	public enum OverlayToStoreFlag : int
@@ -701,6 +687,7 @@ namespace Steamworks
 		FriendsOnly = 1,
 		Public = 2,
 		Invisible = 3,
+		PrivateUnique = 4,
 	}
 	
 	//
@@ -1471,7 +1458,11 @@ namespace Steamworks
 		SteamDeck_Reserved18 = 403,
 		SteamDeck_Reserved19 = 404,
 		SteamDeck_Reserved20 = 405,
-		Count = 406,
+		Horipad_M1 = 406,
+		Horipad_M2 = 407,
+		Horipad_L4 = 408,
+		Horipad_R4 = 409,
+		Count = 410,
 		MaximumPossibleValue = 32767,
 	}
 	
@@ -2008,7 +1999,11 @@ namespace Steamworks
 		PS5_RightGrip = 383,
 		PS5_LeftFn = 384,
 		PS5_RightFn = 385,
-		Count = 386,
+		Horipad_M1 = 386,
+		Horipad_M2 = 387,
+		Horipad_L4 = 388,
+		Horipad_R4 = 389,
+		Count = 390,
 		MaximumPossibleValue = 32767,
 	}
 	
@@ -2245,6 +2240,153 @@ namespace Steamworks
 	}
 	
 	//
+	// ERemotePlayInputType
+	//
+	internal enum RemotePlayInputType : int
+	{
+		Unknown = 0,
+		MouseMotion = 1,
+		MouseButtonDown = 2,
+		MouseButtonUp = 3,
+		MouseWheel = 4,
+		KeyDown = 5,
+		KeyUp = 6,
+	}
+	
+	//
+	// ERemotePlayMouseButton
+	//
+	internal enum RemotePlayMouseButton : int
+	{
+		Left = 1,
+		Right = 2,
+		Middle = 16,
+		X1 = 32,
+		X2 = 64,
+	}
+	
+	//
+	// ERemotePlayMouseWheelDirection
+	//
+	internal enum RemotePlayMouseWheelDirection : int
+	{
+		Up = 1,
+		Down = 2,
+		Left = 3,
+		Right = 4,
+	}
+	
+	//
+	// ERemotePlayScancode
+	//
+	internal enum RemotePlayScancode : int
+	{
+		Unknown = 0,
+		A = 4,
+		B = 5,
+		C = 6,
+		D = 7,
+		E = 8,
+		F = 9,
+		G = 10,
+		H = 11,
+		I = 12,
+		J = 13,
+		K = 14,
+		L = 15,
+		M = 16,
+		N = 17,
+		O = 18,
+		P = 19,
+		Q = 20,
+		R = 21,
+		S = 22,
+		T = 23,
+		U = 24,
+		V = 25,
+		W = 26,
+		X = 27,
+		Y = 28,
+		Z = 29,
+		RemotePlayScancode1 = 30,
+		RemotePlayScancode2 = 31,
+		RemotePlayScancode3 = 32,
+		RemotePlayScancode4 = 33,
+		RemotePlayScancode5 = 34,
+		RemotePlayScancode6 = 35,
+		RemotePlayScancode7 = 36,
+		RemotePlayScancode8 = 37,
+		RemotePlayScancode9 = 38,
+		RemotePlayScancode0 = 39,
+		Return = 40,
+		Escape = 41,
+		Backspace = 42,
+		Tab = 43,
+		Space = 44,
+		Minus = 45,
+		Equals = 46,
+		LeftBracket = 47,
+		RightBracket = 48,
+		Backslash = 49,
+		Semicolon = 51,
+		Apostrophe = 52,
+		Grave = 53,
+		Comma = 54,
+		Period = 55,
+		Slash = 56,
+		CapsLock = 57,
+		F1 = 58,
+		F2 = 59,
+		F3 = 60,
+		F4 = 61,
+		F5 = 62,
+		F6 = 63,
+		F7 = 64,
+		F8 = 65,
+		F9 = 66,
+		F10 = 67,
+		F11 = 68,
+		F12 = 69,
+		Insert = 73,
+		Home = 74,
+		PageUp = 75,
+		Delete = 76,
+		End = 77,
+		PageDown = 78,
+		Right = 79,
+		Left = 80,
+		Down = 81,
+		Up = 82,
+		LeftControl = 224,
+		LeftShift = 225,
+		LeftAlt = 226,
+		LeftGUI = 227,
+		RightControl = 228,
+		RightShift = 229,
+		RightALT = 230,
+		RightGUI = 231,
+	}
+	
+	//
+	// ERemotePlayKeyModifier
+	//
+	internal enum RemotePlayKeyModifier : int
+	{
+		None = 0,
+		LeftShift = 1,
+		RightShift = 2,
+		LeftControl = 64,
+		RightControl = 128,
+		LeftAlt = 256,
+		RightAlt = 512,
+		LeftGUI = 1024,
+		RightGUI = 2048,
+		NumLock = 4096,
+		CapsLock = 8192,
+		Mask = 65535,
+	}
+	
+	//
 	// ESteamNetworkingAvailability
 	//
 	public enum SteamNetworkingAvailability : int
@@ -2270,7 +2412,6 @@ namespace Steamworks
 		SteamID = 16,
 		XboxPairwiseID = 17,
 		SonyPSN = 18,
-		GoogleStadia = 19,
 		IPAddress = 1,
 		GenericString = 2,
 		GenericBytes = 3,
@@ -2393,10 +2534,17 @@ namespace Steamworks
 		LocalVirtualPort = 38,
 		DualWifi_Enable = 39,
 		EnableDiagnosticsUI = 46,
+		SendTimeSincePreviousPacket = 59,
 		FakePacketLoss_Send = 2,
 		FakePacketLoss_Recv = 3,
 		FakePacketLag_Send = 4,
 		FakePacketLag_Recv = 5,
+		FakePacketJitter_Send_Avg = 53,
+		FakePacketJitter_Send_Max = 54,
+		FakePacketJitter_Send_Pct = 55,
+		FakePacketJitter_Recv_Avg = 56,
+		FakePacketJitter_Recv_Max = 57,
+		FakePacketJitter_Recv_Pct = 58,
 		FakePacketReorder_Send = 6,
 		FakePacketReorder_Recv = 7,
 		FakePacketReorder_Time = 8,

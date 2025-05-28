@@ -50,7 +50,6 @@ namespace Steamworks
 		FriendsGetFollowerCount = 344,
 		FriendsIsFollowing = 345,
 		FriendsEnumerateFollowingList = 346,
-		SetPersonaNameResponse = 347,
 		UnreadChatMessagesChanged = 348,
 		OverlayBrowserProtocolNavigation = 349,
 		EquippedProfileItemsChanged = 350,
@@ -65,7 +64,6 @@ namespace Steamworks
 		LobbyMatchList = 510,
 		LobbyKicked = 512,
 		LobbyCreated = 513,
-		PSNGameBootInviteResult = 515,
 		FavoritesListAccountsUpdated = 516,
 		IPCountry = 701,
 		LowBatteryPower = 702,
@@ -93,7 +91,6 @@ namespace Steamworks
 		UserAchievementIconFetched = 1109,
 		GlobalAchievementPercentagesReady = 1110,
 		LeaderboardUGCSet = 1111,
-		// PS3TrophiesInstalled = 1112,
 		GlobalStatsReceived = 1112,
 		// SocketStatusCallback = 1201,
 		P2PSessionRequest = 1202,
@@ -198,6 +195,8 @@ namespace Steamworks
 		HTML_UpdateToolTip = 4525,
 		HTML_HideToolTip = 4526,
 		HTML_BrowserRestarted = 4527,
+		BroadcastUploadStart = 4604,
+		BroadcastUploadStop = 4605,
 		GetVideoURLResult = 4611,
 		GetOPFSettingsResult = 4624,
 		SteamInventoryResultReady = 4700,
@@ -223,6 +222,8 @@ namespace Steamworks
 		SteamRemotePlaySessionConnected = 5701,
 		SteamRemotePlaySessionDisconnected = 5702,
 		SteamRemotePlayTogetherGuestInvite = 5703,
+		SteamTimelineGamePhaseRecordingExists = 6001,
+		SteamTimelineEventRecordingExists = 6002,
 	}
 	internal static partial class CallbackTypeFactory
 	{
@@ -270,7 +271,6 @@ namespace Steamworks
 			{ CallbackType.FriendsGetFollowerCount, typeof( FriendsGetFollowerCount_t )},
 			{ CallbackType.FriendsIsFollowing, typeof( FriendsIsFollowing_t )},
 			{ CallbackType.FriendsEnumerateFollowingList, typeof( FriendsEnumerateFollowingList_t )},
-			{ CallbackType.SetPersonaNameResponse, typeof( SetPersonaNameResponse_t )},
 			{ CallbackType.UnreadChatMessagesChanged, typeof( UnreadChatMessagesChanged_t )},
 			{ CallbackType.OverlayBrowserProtocolNavigation, typeof( OverlayBrowserProtocolNavigation_t )},
 			{ CallbackType.EquippedProfileItemsChanged, typeof( EquippedProfileItemsChanged_t )},
@@ -285,7 +285,6 @@ namespace Steamworks
 			{ CallbackType.LobbyMatchList, typeof( LobbyMatchList_t )},
 			{ CallbackType.LobbyKicked, typeof( LobbyKicked_t )},
 			{ CallbackType.LobbyCreated, typeof( LobbyCreated_t )},
-			{ CallbackType.PSNGameBootInviteResult, typeof( PSNGameBootInviteResult_t )},
 			{ CallbackType.FavoritesListAccountsUpdated, typeof( FavoritesListAccountsUpdated_t )},
 			{ CallbackType.IPCountry, typeof( IPCountry_t )},
 			{ CallbackType.LowBatteryPower, typeof( LowBatteryPower_t )},
@@ -416,6 +415,8 @@ namespace Steamworks
 			{ CallbackType.HTML_UpdateToolTip, typeof( HTML_UpdateToolTip_t )},
 			{ CallbackType.HTML_HideToolTip, typeof( HTML_HideToolTip_t )},
 			{ CallbackType.HTML_BrowserRestarted, typeof( HTML_BrowserRestarted_t )},
+			{ CallbackType.BroadcastUploadStart, typeof( BroadcastUploadStart_t )},
+			{ CallbackType.BroadcastUploadStop, typeof( BroadcastUploadStop_t )},
 			{ CallbackType.GetVideoURLResult, typeof( GetVideoURLResult_t )},
 			{ CallbackType.GetOPFSettingsResult, typeof( GetOPFSettingsResult_t )},
 			{ CallbackType.SteamInventoryResultReady, typeof( SteamInventoryResultReady_t )},
@@ -441,6 +442,8 @@ namespace Steamworks
 			{ CallbackType.SteamRemotePlaySessionConnected, typeof( SteamRemotePlaySessionConnected_t )},
 			{ CallbackType.SteamRemotePlaySessionDisconnected, typeof( SteamRemotePlaySessionDisconnected_t )},
 			{ CallbackType.SteamRemotePlayTogetherGuestInvite, typeof( SteamRemotePlayTogetherGuestInvite_t )},
+			{ CallbackType.SteamTimelineGamePhaseRecordingExists, typeof( SteamTimelineGamePhaseRecordingExists_t )},
+			{ CallbackType.SteamTimelineEventRecordingExists, typeof( SteamTimelineEventRecordingExists_t )},
 		};
 	}
 }

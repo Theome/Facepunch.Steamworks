@@ -467,22 +467,6 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
-	internal struct SetPersonaNameResponse_t : ICallbackData
-	{
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool Success; // m_bSuccess bool
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool LocalSuccess; // m_bLocalSuccess bool
-		internal Result Result; // m_result EResult
-		
-		#region SteamCallback
-		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SetPersonaNameResponse_t) );
-		public int DataSize => _datasize;
-		public CallbackType CallbackType => CallbackType.SetPersonaNameResponse;
-		#endregion
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct UnreadChatMessagesChanged_t : ICallbackData
 	{
 		
@@ -534,6 +518,8 @@ namespace Steamworks.Data
 		internal bool HasProfileBackground; // m_bHasProfileBackground bool
 		[MarshalAs(UnmanagedType.I1)]
 		internal bool HasMiniProfileBackground; // m_bHasMiniProfileBackground bool
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool FromCache; // m_bFromCache bool
 		
 		#region SteamCallback
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(EquippedProfileItems_t) );
@@ -795,20 +781,6 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(LobbyCreated_t) );
 		public int DataSize => _datasize;
 		public CallbackType CallbackType => CallbackType.LobbyCreated;
-		#endregion
-	}
-	
-	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPackSize )]
-	internal struct PSNGameBootInviteResult_t : ICallbackData
-	{
-		[MarshalAs(UnmanagedType.I1)]
-		internal bool GameBootInviteExists; // m_bGameBootInviteExists bool
-		internal ulong SteamIDLobby; // m_steamIDLobby CSteamID
-		
-		#region SteamCallback
-		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(PSNGameBootInviteResult_t) );
-		public int DataSize => _datasize;
-		public CallbackType CallbackType => CallbackType.PSNGameBootInviteResult;
 		#endregion
 	}
 	
@@ -2710,6 +2682,38 @@ namespace Steamworks.Data
 	}
 	
 	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamTimelineGamePhaseRecordingExists_t : ICallbackData
+	{
+		internal string PhaseIDUTF8() => System.Text.Encoding.UTF8.GetString( PhaseID, 0, System.Array.IndexOf<byte>( PhaseID, 0 ) );
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] // byte[] m_rgchPhaseID
+		internal byte[] PhaseID; // m_rgchPhaseID char [64]
+		internal ulong RecordingMS; // m_ulRecordingMS uint64
+		internal ulong LongestClipMS; // m_ulLongestClipMS uint64
+		internal uint ClipCount; // m_unClipCount uint32
+		internal uint ScreenshotCount; // m_unScreenshotCount uint32
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamTimelineGamePhaseRecordingExists_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.SteamTimelineGamePhaseRecordingExists;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct SteamTimelineEventRecordingExists_t : ICallbackData
+	{
+		internal ulong EventID; // m_ulEventID uint64
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool RecordingExists; // m_bRecordingExists bool
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(SteamTimelineEventRecordingExists_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.SteamTimelineEventRecordingExists;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
 	internal struct GetVideoURLResult_t : ICallbackData
 	{
 		internal Result Result; // m_eResult EResult
@@ -2735,6 +2739,31 @@ namespace Steamworks.Data
 		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(GetOPFSettingsResult_t) );
 		public int DataSize => _datasize;
 		public CallbackType CallbackType => CallbackType.GetOPFSettingsResult;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct BroadcastUploadStart_t : ICallbackData
+	{
+		[MarshalAs(UnmanagedType.I1)]
+		internal bool IsRTMP; // m_bIsRTMP bool
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(BroadcastUploadStart_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.BroadcastUploadStart;
+		#endregion
+	}
+	
+	[StructLayout( LayoutKind.Sequential, Pack = Platform.StructPlatformPackSize )]
+	internal struct BroadcastUploadStop_t : ICallbackData
+	{
+		internal BroadcastUploadResult Result; // m_eResult EBroadcastUploadResult
+		
+		#region SteamCallback
+		public static int _datasize = System.Runtime.InteropServices.Marshal.SizeOf( typeof(BroadcastUploadStop_t) );
+		public int DataSize => _datasize;
+		public CallbackType CallbackType => CallbackType.BroadcastUploadStop;
 		#endregion
 	}
 	

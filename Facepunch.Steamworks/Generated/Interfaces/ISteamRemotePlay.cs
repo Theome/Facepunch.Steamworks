@@ -15,9 +15,9 @@ namespace Steamworks
 			SetupInterface( IsGameServer );
 		}
 		
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemotePlay_v002", CallingConvention = Platform.CC)]
-		internal static extern IntPtr SteamAPI_SteamRemotePlay_v002();
-		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemotePlay_v002();
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_SteamRemotePlay_v003", CallingConvention = Platform.CC)]
+		internal static extern IntPtr SteamAPI_SteamRemotePlay_v003();
+		public override IntPtr GetUserInterfacePointer() => SteamAPI_SteamRemotePlay_v003();
 		
 		
 		#region FunctionMeta
@@ -88,14 +88,14 @@ namespace Steamworks
 		}
 		
 		#region FunctionMeta
-		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_BStartRemotePlayTogether", CallingConvention = Platform.CC)]
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_ShowRemotePlayTogetherUI", CallingConvention = Platform.CC)]
 		[return: MarshalAs( UnmanagedType.I1 )]
-		private static extern bool _BStartRemotePlayTogether( IntPtr self, [MarshalAs( UnmanagedType.U1 )] bool bShowOverlay );
+		private static extern bool _ShowRemotePlayTogetherUI( IntPtr self );
 		
 		#endregion
-		internal bool BStartRemotePlayTogether( [MarshalAs( UnmanagedType.U1 )] bool bShowOverlay )
+		internal bool ShowRemotePlayTogetherUI()
 		{
-			var returnValue = _BStartRemotePlayTogether( Self, bShowOverlay );
+			var returnValue = _ShowRemotePlayTogetherUI( Self );
 			return returnValue;
 		}
 		
@@ -109,6 +109,80 @@ namespace Steamworks
 		{
 			var returnValue = _BSendRemotePlayTogetherInvite( Self, steamIDFriend );
 			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_BEnableRemotePlayTogetherDirectInput", CallingConvention = Platform.CC)]
+		[return: MarshalAs( UnmanagedType.I1 )]
+		private static extern bool _BEnableRemotePlayTogetherDirectInput( IntPtr self );
+		
+		#endregion
+		internal bool BEnableRemotePlayTogetherDirectInput()
+		{
+			var returnValue = _BEnableRemotePlayTogetherDirectInput( Self );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_DisableRemotePlayTogetherDirectInput", CallingConvention = Platform.CC)]
+		private static extern void _DisableRemotePlayTogetherDirectInput( IntPtr self );
+		
+		#endregion
+		internal void DisableRemotePlayTogetherDirectInput()
+		{
+			_DisableRemotePlayTogetherDirectInput( Self );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_GetInput", CallingConvention = Platform.CC)]
+		private static extern uint _GetInput( IntPtr self, ref RemotePlayInput_t pInput, uint unMaxEvents );
+		
+		#endregion
+		internal uint GetInput( ref RemotePlayInput_t pInput, uint unMaxEvents )
+		{
+			var returnValue = _GetInput( Self, ref pInput, unMaxEvents );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_SetMouseVisibility", CallingConvention = Platform.CC)]
+		private static extern void _SetMouseVisibility( IntPtr self, RemotePlaySessionID_t unSessionID, [MarshalAs( UnmanagedType.U1 )] bool bVisible );
+		
+		#endregion
+		internal void SetMouseVisibility( RemotePlaySessionID_t unSessionID, [MarshalAs( UnmanagedType.U1 )] bool bVisible )
+		{
+			_SetMouseVisibility( Self, unSessionID, bVisible );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_SetMousePosition", CallingConvention = Platform.CC)]
+		private static extern void _SetMousePosition( IntPtr self, RemotePlaySessionID_t unSessionID, float flNormalizedX, float flNormalizedY );
+		
+		#endregion
+		internal void SetMousePosition( RemotePlaySessionID_t unSessionID, float flNormalizedX, float flNormalizedY )
+		{
+			_SetMousePosition( Self, unSessionID, flNormalizedX, flNormalizedY );
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_CreateMouseCursor", CallingConvention = Platform.CC)]
+		private static extern RemotePlayCursorID_t _CreateMouseCursor( IntPtr self, int nWidth, int nHeight, int nHotX, int nHotY, IntPtr pBGRA, int nPitch );
+		
+		#endregion
+		internal RemotePlayCursorID_t CreateMouseCursor( int nWidth, int nHeight, int nHotX, int nHotY, IntPtr pBGRA, int nPitch )
+		{
+			var returnValue = _CreateMouseCursor( Self, nWidth, nHeight, nHotX, nHotY, pBGRA, nPitch );
+			return returnValue;
+		}
+		
+		#region FunctionMeta
+		[DllImport( Platform.LibraryName, EntryPoint = "SteamAPI_ISteamRemotePlay_SetMouseCursor", CallingConvention = Platform.CC)]
+		private static extern void _SetMouseCursor( IntPtr self, RemotePlaySessionID_t unSessionID, RemotePlayCursorID_t unCursorID );
+		
+		#endregion
+		internal void SetMouseCursor( RemotePlaySessionID_t unSessionID, RemotePlayCursorID_t unCursorID )
+		{
+			_SetMouseCursor( Self, unSessionID, unCursorID );
 		}
 		
 	}

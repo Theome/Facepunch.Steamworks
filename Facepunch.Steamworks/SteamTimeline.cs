@@ -20,13 +20,13 @@ public class SteamTimeline : SteamClientClass<SteamTimeline>
 	/// </summary>
 	/// <param name="description">A localized string in the language returned by SteamUtils()->GetSteamUILanguage()</param>
 	/// <param name="timeDelta">The time offset in seconds to apply to this state change. Negative times indicate an event that happened in the past.</param>
-	public static void SetTimelineStateDescription( string description, float timeDelta ) => Internal.SetTimelineStateDescription( description, timeDelta );
+	public static void SetTimelineStateDescription( string description, float timeDelta ) => Internal.SetTimelineTooltip( description, timeDelta );
 
 	/// <summary>
 	/// Clears the previous set game state in the timeline.
 	/// </summary>
 	/// <param name="timeDelta">The time offset in seconds to apply to this state change. Negative times indicate an event that happened in the past.</param>
-	public static void ClearTimelineStateDescription( float timeDelta ) => Internal.ClearTimelineStateDescription( timeDelta );
+	public static void ClearTimelineStateDescription( float timeDelta ) => Internal.ClearTimelineTooltip( timeDelta );
 
 	/// <summary>
 	/// Use this to mark an event on the Timeline. The event can be instantaneous or take some amount of time to complete, depending on the value passed in flDurationSeconds.
@@ -39,7 +39,7 @@ public class SteamTimeline : SteamClientClass<SteamTimeline>
 	/// One use of this parameter is to handle events whose significance is not clear until after the fact. For instance if the player starts a damage over time effect on another player, which kills them 3.5 seconds later, the game could pass -3.5 as the start offset and cause the event to appear in the timeline where the effect started.</param>
 	/// <param name="durationInSeconds">The duration of the event, in seconds. Pass 0 for instantaneous events.</param>
 	/// <param name="possibleClip">Allows the game to describe events that should be suggested to the user as possible video clips.</param>
-	public static void AddTimelineEvent(string icon, string title, string description, uint priority, float startOffsetInSeconds, float durationInSeconds, TimelineEventClipPriority possibleClip) => Internal.AddTimelineEvent(icon, title, description, priority, startOffsetInSeconds, durationInSeconds, possibleClip);
+	public static void AddRangeTimelineEvent(string title, string description, string icon, uint priority, float startOffsetInSeconds, float durationInSeconds, TimelineEventClipPriority possibleClip) => Internal.AddRangeTimelineEvent(title, description, icon, priority, startOffsetInSeconds, durationInSeconds, possibleClip);
 	
 	/// <summary>
 	/// hanges the color of the timeline bar. See ETimelineGameMode for how to use each value.

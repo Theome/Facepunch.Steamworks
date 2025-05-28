@@ -614,6 +614,22 @@ namespace Steamworks.Data
 		public int CompareTo( SteamInventoryUpdateHandle_t other ) => Value.CompareTo( other.Value );
 	}
 	
+	internal struct TimelineEventHandle_t : IEquatable<TimelineEventHandle_t>, IComparable<TimelineEventHandle_t>
+	{
+		// Name: TimelineEventHandle_t, Type: unsigned long long
+		public ulong Value;
+		
+		public static implicit operator TimelineEventHandle_t( ulong value ) => new TimelineEventHandle_t(){ Value = value };
+		public static implicit operator ulong( TimelineEventHandle_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (TimelineEventHandle_t) p );
+		public bool Equals( TimelineEventHandle_t p ) => p.Value == Value;
+		public static bool operator ==( TimelineEventHandle_t a, TimelineEventHandle_t b ) => a.Equals( b );
+		public static bool operator !=( TimelineEventHandle_t a, TimelineEventHandle_t b ) => !a.Equals( b );
+		public int CompareTo( TimelineEventHandle_t other ) => Value.CompareTo( other.Value );
+	}
+	
 	internal struct RemotePlaySessionID_t : IEquatable<RemotePlaySessionID_t>, IComparable<RemotePlaySessionID_t>
 	{
 		// Name: RemotePlaySessionID_t, Type: unsigned int
@@ -628,6 +644,22 @@ namespace Steamworks.Data
 		public static bool operator ==( RemotePlaySessionID_t a, RemotePlaySessionID_t b ) => a.Equals( b );
 		public static bool operator !=( RemotePlaySessionID_t a, RemotePlaySessionID_t b ) => !a.Equals( b );
 		public int CompareTo( RemotePlaySessionID_t other ) => Value.CompareTo( other.Value );
+	}
+	
+	internal struct RemotePlayCursorID_t : IEquatable<RemotePlayCursorID_t>, IComparable<RemotePlayCursorID_t>
+	{
+		// Name: RemotePlayCursorID_t, Type: unsigned int
+		public uint Value;
+		
+		public static implicit operator RemotePlayCursorID_t( uint value ) => new RemotePlayCursorID_t(){ Value = value };
+		public static implicit operator uint( RemotePlayCursorID_t value ) => value.Value;
+		public override string ToString() => Value.ToString();
+		public override int GetHashCode() => Value.GetHashCode();
+		public override bool Equals( object p ) => this.Equals( (RemotePlayCursorID_t) p );
+		public bool Equals( RemotePlayCursorID_t p ) => p.Value == Value;
+		public static bool operator ==( RemotePlayCursorID_t a, RemotePlayCursorID_t b ) => a.Equals( b );
+		public static bool operator !=( RemotePlayCursorID_t a, RemotePlayCursorID_t b ) => !a.Equals( b );
+		public int CompareTo( RemotePlayCursorID_t other ) => Value.CompareTo( other.Value );
 	}
 	
 	internal struct HSteamNetPollGroup : IEquatable<HSteamNetPollGroup>, IComparable<HSteamNetPollGroup>
